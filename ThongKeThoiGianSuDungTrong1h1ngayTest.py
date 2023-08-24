@@ -2,14 +2,14 @@ import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-file_path = '2023-08-14.csv'
+file_path = '2023-08-04.csv'
 final_data =  {i: None for i in range(24)}
 data = pd.read_csv(file_path, parse_dates=['ts'])
+data = data.drop_duplicates(subset='ts',keep=False)
 grouped = data.groupby(data['ts'].dt.hour)
 list_of_dfs = [group.reset_index(drop=True) for _, group in grouped]
 for _,df in enumerate(list_of_dfs):
     df = df.sort_values(by='ts', ascending=True)
-    df = df.drop_duplicates(subset='ts',keep=False)
     sample_datetime_1 = datetime(df['ts'].iloc[0].year,df['ts'].iloc[0].month,df['ts'].iloc[0].day,df['ts'].iloc[0].hour,0,0)
     sample_datetime_2 = datetime(df['ts'].iloc[0].year,df['ts'].iloc[0].month,df['ts'].iloc[0].day,df['ts'].iloc[0].hour,59,59)
     time_intervals = df.diff()

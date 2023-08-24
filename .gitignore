@@ -1,5 +1,6 @@
 /db_cassandra
 /db_postgres
+/datatest
 /data
 pandas_basic.py
 LogisticR.py
